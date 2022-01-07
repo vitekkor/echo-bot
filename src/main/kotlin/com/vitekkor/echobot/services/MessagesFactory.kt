@@ -12,8 +12,6 @@ class MessagesFactory {
         message.add("peer_id", original.peerId.toString())
         message.add("random_id", System.currentTimeMillis().toString())
         message.add("message", original.text)
-        message.add("attachment", original.attachments.joinToString(","))
-        message.add("forward_messages", original.forwardMessages.joinToString(","))
         return message
     }
 }
