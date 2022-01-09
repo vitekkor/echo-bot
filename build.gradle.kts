@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+val mockitoKotlinVersion: String by project
 val coroutinesVersion: String by project
 
 plugins {
@@ -10,7 +11,7 @@ plugins {
 }
 
 group = "com.vitekkor"
-version = "0.0.1-SNAPSHOT"
+version = "1.0"
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
@@ -32,6 +33,7 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
 }
 
 tasks.withType<KotlinCompile> {
