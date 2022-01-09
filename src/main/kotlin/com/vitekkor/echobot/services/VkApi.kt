@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
-import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
 import org.springframework.web.reactive.function.BodyInserters
 import org.springframework.web.reactive.function.client.WebClient
@@ -28,14 +27,12 @@ class VkApi(private val vkApiConfig: VkApiConfig, private val client: WebClient)
         override fun toString(): String = methodName
     }
 
-    suspend fun makePostRequest(method: Methods, body: (MultiValueMap<String, String>) -> Unit): VkResponse? {
-        val bodyData = LinkedMultiValueMap<String, String>()
-        body(bodyData)
+    suspend fun makePostRequest(method: Methods, body: MultiValueMap<String, String>): VkResponse? {
         val request = client.post().uri(getApiUri(method))
             .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
             .accept(MediaType.APPLICATION_JSON)
-            .body(BodyInserters.fromFormData(bodyData))
-        log.info("Request: method - $method; body - $bodyData")
+            .body(BodyInserters.fromFormData(body))
+        log.info("Request: method - $method; body - $body")
 
         return request.awaitExchangeOrNull {
             if (it.statusCode().is2xxSuccessful) {

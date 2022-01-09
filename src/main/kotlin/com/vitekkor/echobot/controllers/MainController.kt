@@ -27,9 +27,7 @@ class MainController(
         }
         if (body.type == Body.Type.MESSAGE_NEW) {
             val echoMessage = messagesFactory.createEchoMessage(body.`object`!!.message)
-            vkApi.makePostRequest(VkApi.Methods.MESSAGES_SEND) {
-                it.addAll(echoMessage)
-            }
+            vkApi.makePostRequest(VkApi.Methods.MESSAGES_SEND, echoMessage)
         }
         return "OK"
     }
