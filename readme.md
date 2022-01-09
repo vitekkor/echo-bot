@@ -1,14 +1,14 @@
-#Echo-bot for just-ai
+# Echo-bot for just-ai
 
-###Бот для ВКонтакте, который умеет отвечать на твои сообщения твоими же сообщениями (только текст).
+### Бот для ВКонтакте, который умеет отвечать на твои сообщения твоими же сообщениями (только текст).
 
 Попробовать можно [тут](https://vk.me/echo_bot_justai)
 
-##Stack
+## Stack
 * ####Spring boot webflux
 * ####Kotlin coroutines
 
-##Requires
+## Requires
 
 * jdk-11
 * docker (if you want run it in docker)
@@ -31,7 +31,7 @@ chmod +x build.sh
 ./build.sh docker - to run it in docker. otherwise do not specify anything
 ```
 
-###More about test case
+### More about test case
 
 Необходимо выполнить интеграцию с BotAPI VK. https://vk.com/dev/bots_docs
 
@@ -40,7 +40,7 @@ chmod +x build.sh
 ![example](example.jpg)
 
 
-###Требования к реализации
+### Требования к реализации
 В качестве решения хотелось бы получить ссылку на git репозиторий в котором находятся исходники Spring Boot приложения выполняющего логику бота.
 Все параметры необходимые для корректного запуска и проверки должны задаваться в конфигурационных файлах (необходимо решить какие именно параметры).
 Все сущности с помощью которых осуществляется взаимодействие должны быть представлены в виде POJO.
