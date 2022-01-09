@@ -13,7 +13,7 @@
 * jdk-11
 * docker (if you want run it in docker)
 
-##How to install
+## How to install
 
 ```
 git clone https://github.com/vitekkor/echo-bot
