@@ -5,8 +5,8 @@
 Попробовать можно [тут](https://vk.me/echo_bot_justai)
 
 ## Stack
-* ####Spring boot webflux
-* ####Kotlin coroutines
+* #### Spring boot webflux
+* #### Kotlin coroutines
 
 ## Requires
 
