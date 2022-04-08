@@ -14,4 +14,10 @@ class MessagesFactory {
         message.add("message", original.text)
         return message
     }
+
+    fun getLongPollMessage(groupId: String): MultiValueMap<String, String> {
+        val message = LinkedMultiValueMap<String, String>()
+        message.add("group_id", groupId)
+        return message
+    }
 }

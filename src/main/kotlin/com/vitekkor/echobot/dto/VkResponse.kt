@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class VkResponse(val response: Any?, val error: Error?) {
+data class VkResponse(val response: Map<String, String>?, val error: Error?) {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     data class Error(

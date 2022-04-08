@@ -1,6 +1,7 @@
 package com.vitekkor.echobot.services
 
 import com.vitekkor.echobot.configs.VkApiConfig
+import com.vitekkor.echobot.dto.Updates
 import com.vitekkor.echobot.dto.VkResponse
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpHeaders
@@ -22,7 +23,8 @@ class VkApi(private val vkApiConfig: VkApiConfig, private val client: WebClient)
 
 
     enum class Methods(private val methodName: String) {
-        MESSAGES_SEND("messages.send");
+        MESSAGES_SEND("messages.send"),
+        GET_LONG_POLL_SERVER("groups.getLongPollServer");
 
         override fun toString(): String = methodName
     }
@@ -43,6 +45,23 @@ class VkApi(private val vkApiConfig: VkApiConfig, private val client: WebClient)
                     log.info("Successful request! Response: $vkResponse")
                 }
                 return@awaitExchangeOrNull vkResponse
+            } else {
+                log.error("Unexpected error: ${it.statusCode()}; ${it.awaitBody<String>()}")
+                return@awaitExchangeOrNull null
+            }
+        }
+    }
+
+    suspend fun getUpdates(server: String, key: String, ts: Int): Updates? {
+        val uri = URI("$server?act=a_check&key=$key&ts=$ts&wait=25")
+        val request = client.post().uri(uri)
+            .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+            .accept(MediaType.APPLICATION_JSON)
+        log.info("Fetch updates")
+
+        return request.awaitExchangeOrNull {
+            if (it.statusCode().is2xxSuccessful) {
+                return@awaitExchangeOrNull it.awaitBody<Updates>()
             } else {
                 log.error("Unexpected error: ${it.statusCode()}; ${it.awaitBody<String>()}")
                 return@awaitExchangeOrNull null

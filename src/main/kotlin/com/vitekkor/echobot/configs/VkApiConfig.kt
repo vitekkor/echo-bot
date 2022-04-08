@@ -10,5 +10,6 @@ import org.springframework.boot.context.properties.ConstructorBinding
 data class VkApiConfig(
     val accessToken: String,
     val confirmationString: String,
+    val groupId: String,
     val version: Double
 )
