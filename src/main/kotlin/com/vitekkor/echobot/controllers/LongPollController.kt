@@ -7,6 +7,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.NoSuchBeanDefinitionException
 import org.springframework.stereotype.Service
 import javax.annotation.PostConstruct
 
@@ -18,6 +20,8 @@ class LongPollController(
 ) {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
+
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     private val server = longPollServer.server
     private val key = longPollServer.key
@@ -35,7 +39,11 @@ class LongPollController(
                         val command = text.split(" ").getOrNull(0)
                         if (command != null) {
                             if (command.startsWith("/")) {
-                                messagesGateway.send(it, command)
+                                try {
+                                    messagesGateway.send(it, command)
+                                } catch (_: NoSuchBeanDefinitionException) {
+                                    log.info("No handlers for command $command")
+                                }
                             } else {
                                 messagesGateway.send(it, "echoInputChannel")
                             }
